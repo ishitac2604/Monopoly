@@ -1,0 +1,107 @@
+
+div {
+  margin: 0;
+  padding: 0;
+}
+
+/*
+ * Set up the game board in a 4x4 grid using table-row and cell CSS
+ * Game board is 48x60em with each cell (property) being 12x12em
+ * The right column is player info panels
+ */
+.game_board {
+  /* width: 60em; */
+  height: 100%;
+  padding: 4rem 10rem;
+  background-image: url('https://images-na.ssl-images-amazon.com/images/S/pv-target-images/aa22f7bd40726af6afd9c54799b3cbe996ade4542b502f08f8d64e832f2e18b1._RI_.jpg');
+}
+
+.row {
+  height: 10em;
+  display: table-row;
+  border-spacing: 20rem;
+  border-collapse: separate;
+}
+
+.cell {
+  outline: 1px solid black;
+  background-color: #fefae0;
+  display: table-cell;
+  width: 12em;
+  height: 5em;
+  text-align: center;
+}
+
+p{
+  margin: 0;
+  padding: 0;
+}
+
+.space {
+  display: table-cell;
+  width: 12em;
+  height: 5em;
+  text-align: center;
+  padding: .5em;
+}
+
+.square-name {
+  height: 2rem;
+  font-weight: bold;
+  border: 1px solid black;
+}
+
+.info {
+  background-color: #fefaf1;
+}
+
+/*Tokens*/
+.Triangle {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  border-left: 20px solid transparent;
+  border-right: 20px solid transparent;
+  border-bottom: 25px solid green;
+}
+
+.Circle {
+  display: inline-block;
+  width: 30px;
+  height: 30px;
+  background: green;
+  /* -moz-border-radius: 50px;
+  -webkit-border-radius: 50px; */
+  border-radius: 100%;
+}
+
+#player1-info_token {
+  display: inline-block;
+  margin: 0;
+  width: 0;
+  height: 0;
+  border-left: 10px solid transparent;
+  border-right: 10px solid transparent;
+  border-bottom: 20px solid green;
+}
+
+#player2-info_token {
+  display: inline-block;
+  margin: 0;
+  width: 20px;
+  height: 20px;
+  background: green;
+  -moz-border-radius: 50px;
+  -webkit-border-radius: 50px;
+  border-radius: 50px;
+}
+
+.special{
+  margin: 0;
+  height: 0;
+  border: 0;
+}
+
+.info{
+  padding-left: 2rem;
+}
