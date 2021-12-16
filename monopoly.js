@@ -139,7 +139,7 @@ var Game = (function() {
     //if current player drops below $0, they've lost
     var currentPlayer = game.currentPlayer;
 
-    if (game.players[currentPlayer].cash <= 1100){
+    if (game.players[currentPlayer].cash <= 0){
       console.log(game.players[currentPlayer])
       game.players[currentPlayer].updateCash(0);
       setTimeout(function() {
