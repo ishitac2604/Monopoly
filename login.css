@@ -1,0 +1,59 @@
+  html, body {
+    margin: 0;
+    height: 100%;
+    background-image: url('https://lh3.googleusercontent.com/proxy/hTXXwemSqU2HtsRWAYddMApwmD_Q8QTFV66OsGeXbKB1Eu5FOPv4gR88htzJB5lj4AOqBVTF2EFNZ9q6NF_Ok5E7wGctc_7tAxWstun8lbqy2ZZe');
+    background-repeat: no-repeat;
+    background-size: cover;
+  }
+
+.container{
+  padding-top: 12rem;
+  text-align: center;
+}
+
+.login-page{
+  padding: 3.5rem;
+  width: 45%;
+  margin: 0 auto;
+  background-color: rgb(248, 249, 250,0.7);
+  font-size: 2rem;
+  border-radius: 1.5rem;
+  /* opacity: 0.2; */
+}
+
+
+h3{
+  font-family: 'Bebas Neue', cursive;
+  padding-bottom: 1rem;
+  font-size: 3.5rem;
+  letter-spacing: 2px;
+}
+
+input[type="text"] {
+  text-align: center;
+  height: 60px;
+  top: 10px;
+  border: 0.5px solid;
+  background: transparent;
+  font-size: 20px;
+  font-weight: 200;
+  width: 50%;
+  border-radius: 3px;
+  margin-bottom: 1.4rem;
+}
+
+label{
+  font-family: 'Source Sans 3', sans-serif;
+  margin-right: 1.3rem;
+}
+
+::placeholder {
+  font-size: 1.5rem;
+  color: grey;
+  opacity: 0.5;
+}
+
+.btn{
+  font-family: 'Source Sans 3', sans-serif !important;
+  margin: 0.5rem 0;
+}

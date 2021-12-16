@@ -3,189 +3,36 @@
   <head>
     <meta charset="utf-8">
     <title>Monopoly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Sans+3&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="login.css">
   </head>
   <body>
-    <section class="game_board">
-    <div class="row">
-      <div class="cell square col-lg-6" id="square11">
-        <img src="https://i.pinimg.com/600x315/26/89/29/2689290b35f32a34aaf13ae7020f6b57.jpg" style="height: 7rem; margin-top: 10px" alt="">
-        <p id="square11-residents"></p>
-      </div>
-      <div class="cell square col-lg-6" id="square12">
-        <p id="square12-name" class="square-name"></p>
-        <p id="square12-value"></p>
-        <p id="square12-owner"></p>
-        <p id="square12-residents"></p>
-      </div>
-      <div class="cell square col-lg-6" id="square13">
-        <p id="square13-name" class="square-name"></p>
-        <p id="square13-value"></p>
-        <p id="square13-owner"></p>
-        <p id="square13-residents"></p>
-      </div>
-      <div class="cell square col-lg-6" id="square14">
-        <p id="square14-name" class="square-name"></p>
-        <p id="square14-value"></p>
-        <p id="square14-owner"></p>
-        <p id="square14-residents"></p>
-      </div>
-      <div class="cell square col-lg-6" id="square15">
-        <p id="square15-name" class="square-name"></p>
-        <p id="square15-value"></p>
-        <p id="square15-owner"></p>
-        <p id="square15-residents"></p>
-      </div>
-      <div class="cell square col-lg-6" id="square16">
-        <img src="https://i.pinimg.com/originals/ab/0f/77/ab0f77c5c9918f241b1a2512cd2bcf38.jpg" style="height: 7rem; width: 7rem; margin-top: 10px" alt="">
-        <p id="square16-residents"></p>
-      </div>
-      <div class="space info" id="player1-info">
-        <!-- <p>Player 1</p> -->
-        <p id="player1-info_name" style="font-weight: bold; margin-bottom: 10px; font-size: 18px;">Player 1</p>
-        <p id="player1-info_token"></p>
-        <p id="player1-info_cash">Cash</p>
-      </div>
-    </div>
-    <div class="row">
-      <div class="cell square" id="square10">
-        <p id="square10-name" class="square-name">Sqaure 10</p>
-        <p id="square10-value"></p>
-        <p id="square10-owner"></p>
-        <p id="square10-residents"></p>
-      </div>
-      <div class="space middle"></div>
-      <div class="space middle"></div>
-      <div class="space middle"></div>
-      <div class="space middle"></div>
-      <div class="cell square" id="square17">
-        <p id="square17-name" class="square-name"></p>
-        <p id="square17-value"></p>
-        <p id="square17-owner"></p>
-        <p id="square17-residents"></p>
-      </div>
-      <div class="space info">
-        <p style="font-weight: bold; margin: 15px 0; font-size: 18px;">Last Message:</p>
-        <p id="messagePara"></p>
 
+    <div class="container">
+        <div class="login-page">
+        <h3>Welcome To MonoLand</h3>
+        <form class="" action="monopoly.html" method="GET" onsubmit="begin()" type="submit">
+          <label for="uname"><b>Player 1</b></label>
+          <input type="text" placeholder="Enter Player 1 Name" id= "uname1" name="uname" value="" required autocomplete="off"><br>
+          <label for="uname"><b>Player 2</b></label>
+          <input type="text" placeholder="Enter Player 2 Name" id= "uname2" name="uname" value="" required autocomplete="off"><br>
+          <button type="button" class="btn btn-dark btn-lg" onClick="begin()">Start Game</button>
+        </form>
       </div>
     </div>
 
-    <div class="row">
-      <div class="cell square" id="square9">
-        <p id="square9-name" class="square-name"></p>
-        <p id="square9-value"></p>
-        <p id="square9-owner"></p>
-        <p id="square9-residents"></p>
-      </div>
-      <div class="space middle"></div>
-      <div class="space middle"><img src="images/dice1.png" style="height: 4rem; width: 4rem; margin-left: 120px; margin-top: 10px" id="img1" alt=""></div>
-      <div class="space middle"><img id="img2" src="images/dice1.png" style="height: 4rem; width: 4rem; margin-right: 120px; margin-top: 10px" alt=""></div>
-      <div class="space middle"></div>
-      <div class="cell square" id="square18">
-        <!-- <p class="square-name special"></p> -->
-        <img src="https://i.pinimg.com/originals/23/3e/ff/233eff1a0bcd8812bf8ba73fd94235bc.jpg" style="height: 7rem; width: 7rem;" alt="">
-        <p id="square18-residents"></p>
-      </div>
-      <div class="space info"></div>
-    </div>
-
-    <div class="row">
-      <div class="cell square" id="square8">
-        <p id="square8-name" class="square-name"></p>
-        <p id="square8-value"></p>
-        <p id="square8-owner"></p>
-        <p id="square8-residents"></p>
-      </div>
-      <div class="space middle"></div>
-      <div class="space middle"><img src="https://i.imgur.com/pHQoMNF.jpg?fb" style="height: 6rem; border: 1px solid black;"/></div>
-      <div class="space middle"><img src="https://www.shropshirelive.com/wp-content/uploads/2019/05/CC.jpg" style="height: 6rem; width: 10rem; border: 1px solid black;"/></div>
-      <div class="space middle"></div>
-      <div class="cell square" id="square19">
-        <p id="square19-name" class="square-name"></p>
-        <p id="square19-value"></p>
-        <p id="square19-owner"></p>
-        <p id="square19-residents"></p>
-      </div>
-
-      <div class="space info col-lg-6">
-        <p style="font-weight: bold; font-size: 18px;">Current Turn:</p>
-        <p id="currentTurn" style="font-weight: bold; font-size: 18px; margin-bottom: 10px">Player 1</p>
-        <button type="button" class="btn btn-danger" id="rollButton">Roll Dice</button>
-      </div>
-    </div>
-
-
-    <div class="row">
-      <div class="cell square" id="square7">
-        <p id="square7-name" class="square-name"></p>
-        <p id="square7-value"></p>
-        <p id="square7-owner"></p>
-        <p id="square7-residents"></p>
-      </div>
-      <div class="space middle"></div>
-      <div class="space middle"></div>
-      <div class="space middle"></div>
-      <div class="space middle"></div>
-      <div class="cell square" id="square20">
-        <p id="square20-name" class="square-name"></p>
-        <p id="square20-value"></p>
-        <p id="square20-owner"></p>
-        <p id="square20-residents"></p>
-      </div>
-      <div class="space info"></div>
-    </div>
-
-
-    <div class="row">
-      <div class="cell square" id="square6">
-
-        <img src="https://jacusloxy.files.wordpress.com/2012/12/monopoly-jail.jpg?w=223" style="height: 7rem;"  alt="">
-        <p id="square6-residents"></p>
-      </div>
-      <div class="cell square" id="square5">
-        <p id="square5-name" class="square-name"></p>
-        <p id="square5-value"></p>
-        <p id="square5-owner"></p>
-        <p id="square5-residents"></p>
-      </div>
-      <div class="cell square" id="square4">
-        <p id="square4-name" class="square-name"></p>
-        <p id="square4-value"></p>
-        <p id="square4-owner"></p>
-        <p id="square4-residents"></p>
-      </div>
-      <div class="cell square" id="square3">
-        <p class="square-name special"></p>
-        <img src="https://1075koolfm.com/wp-content/uploads/2021/03/61AidUu9UOL._AC_SL1250_.jpg" style="height: 7rem;  width: 7rem;" alt="">
-        <p id="square3-residents"></p>
-      </div>
-      <div class="cell square" id="square2">
-        <p id="square2-name" class="square-name"></p>
-        <p id="square2-value"></p>
-        <p id="square2-owner"></p>
-        <p id="square2-residents"></p>
-      </div>
-      <div class="cell start" id="square1">
-        <p class="square-name special"></p>
-        <img src="https://static.wikia.nocookie.net/monopoly/images/9/91/Go-.gif/revision/latest/scale-to-width-down/230?cb=20071004123654" style="height: 7rem; margin-top: 10px;" alt="">
-        <p id="square1-residents"></p>
-      </div>
-      <div class="space info" id="player2-info">
-        <!-- <p>Player 2</p> -->
-        <p id="player2-info_name" style="font-weight: bold; margin-bottom: 10px; font-size: 18px;">Player 2</p>
-        <p id="player2-info_token"></p>
-        <p id="player2-info_cash">Cash</p>
-      </div>
-
-
-
-    </div>
-
-  </section>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script type="text/javascript" src="index.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    <script>
+      function begin(){
+        var username1 = document.getElementById('uname1').value;
+        var username2 = document.getElementById('uname2').value;
+        localStorage.setItem("u1",username1);
+        localStorage.setItem("u2",username2);
+        window.location = "monopoly.html"
+      }
+    </script>
   </body>
 </html>

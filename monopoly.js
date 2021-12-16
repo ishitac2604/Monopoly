@@ -1,28 +1,3 @@
-/*
- This game is a very simple knock off of Monopoly.
-
- It is set up using an IIFE to create a Game object.
-
- Then there are two types of ojbects used to create the game:
-    Square objects to represent the squares on the board (all known as properties,
-	  but I'm mostly calling them Squares to avoid confusion with object properties).
-	  These store value, rent, name, etc.
-	Player objects, representing the different players in the game. These store name,
-	  cash, ID, etc.
- These objects are created at the beginning of the game (within the Game object)
- and are updated as the game progresses.
-
- The players roll the dice and progress around the board. They can buy property when they
- land on an open square. First player to go below $0 loses.
-
- There are some limitations on what you can do in this game based on the amount of time I have left for this project:
- 1. two fixed players
- 2. no selling to other player
- 3. no auction
- 4. no houses or hotels
- 5. no mortgages
-*/
-
 window.onload = function() {
   //find dice role button and bind takeTurn method
   var rollButton = document.getElementById("rollButton");
@@ -104,14 +79,16 @@ var Game = (function() {
   communityCards.enqueue({id: 4, title: "Time to pay your crimes. Go to Jail"});
   //build an array of players
   //note: initial version of the game only allows two fixed players
+  let player1Name = localStorage.getItem('u1');
+  let player2Name = localStorage.getItem('u2');
   game.players = [
-    new Player("Player 1",1200, "Triangle", "player1"),
-    new Player("Player 2", 1200, "Circle", "player2")
+    new Player(player1Name,1200, "Triangle", "player1"),
+    new Player(player2Name, 1200, "Circle", "player2")
   ];
 
   //set the game property for current player. Initially player 1. (Using an index of the game.players array.)
   game.currentPlayer = 0;
-
+  updateByID("currentTurn", game.players[game.currentPlayer].name);
   //set up a method that will add the squares to the game board
   game.populateBoard = function() {
     //loop through all the squares in the game board
@@ -150,46 +127,47 @@ var Game = (function() {
   //advance the player
   //call function to either allow purchase or charge rent
   game.takeTurn = function() {
-
-    if(end == true){
-      gameEnd();
-    }
     //roll dice and advance player
     movePlayer();
     checkTile();
+
     //check the tile the player landed on
     //if the tile is not owned, prompt player to buy
     //if the tile is owned, charge rent and move on
 
     //loss condition:
     //if current player drops below $0, they've lost
-    if (game.players[game.currentPlayer].cash < 0) {
-      game.players[game.currentPlayer].updateCash(0);
-      alert(player + ", you lost the game! Press OK to restart");
-      end = true;
-      // gameEnd();
+    var currentPlayer = game.currentPlayer;
+
+    if (game.players[currentPlayer].cash <= 1100){
+      console.log(game.players[currentPlayer])
+      game.players[currentPlayer].updateCash(0);
+      setTimeout(function() {
+  	     alert(game.players[currentPlayer].name + ", you lost the game! Press OK to restart");
+       },10)
+
+      window.location = "index.html";
+    }else{
+      console.log(game.players[currentPlayer])
+      game.currentPlayer = nextPlayer(game.currentPlayer);
+      updateByID("currentTurn", game.players[game.currentPlayer].name);
     }
-
-    //advance to next player
-    game.currentPlayer = nextPlayer(game.currentPlayer);
-
-    //update info panel with name of current player
-    updateByID("currentTurn", game.players[game.currentPlayer].name);
   };
 
-
-  function gameEnd(){
-
-    // alert(player + ", you lost the game! Press OK to restart");
-    end = false;
-    game.players[0].updateCash(1200);
-    game.players[1].updateCash(1200);
-    updateByID("messagePara","New Game");
-    updateByID("player1-info_cash", "Cash: " + game.players[0].cash);
-    updateByID("player2-info_cash", "Cash: " + game.players[1].cash);
-    changePosition(game.players[0],1);
-    changePosition(game.players[1],1);
-  }
+  //
+  // function gameEnd(){
+  //
+  //   // alert(player + ", you lost the game! Press OK to restart");
+  //   end = false;
+  //   game.players[0].updateCash(1200);
+  //   game.players[1].updateCash(1200);
+  //   updateByID("messagePara","New Game");
+  //   // updateByID("player1-info_cash", "Cash: " + game.players[0].cash);
+  //   // updateByID("player2-info_cash", "Cash: " + game.players[1].cash);
+  //   // changePosition(game.players[0],1);
+  //   // changePosition(game.players[1],1);
+  //   window.
+  // }
 
 
   /****                    Game-level private functions                        *****/
@@ -211,17 +189,12 @@ var Game = (function() {
 
       var die1 = Math.floor((Math.random() * 5) + 1);
       var die2 = Math.floor((Math.random() * 5) + 1);
-
-      var moves = die1 + die2;
-
       var img1 = "images/dice" + die1 + ".png";
       var img2 = "images/dice" + die2 + ".png";
-
+      var moves = die1 + die2;
       document.getElementById('img1').setAttribute("src",img1);
       document.getElementById('img2').setAttribute("src",img2);
 
-      // var moves = 17;
-      // console.log(moves);
       //need the total number of squares, adding 1 because start isn't included in the squares array
       var totalSquares = 20;
       //get the current player and the square he's on
@@ -230,9 +203,9 @@ var Game = (function() {
 
       //figure out if the roll will put player past start. If so, reset and give money for passing start
       if (currentSquare + moves <= totalSquares) {
-        // console.log("dice: " + (currentSquare + moves));
         var nextSquare = currentSquare + moves;
-      } else {
+      }
+      else {
         var nextSquare = currentSquare + moves - totalSquares;
         currentPlayer.updateCash(currentPlayer.cash + 100);
       }
@@ -263,73 +236,58 @@ var Game = (function() {
     })[0];
 
     //check if the player landed on start
-    if(currentSquareId == "square3"){
-      handleCommunityCard(currentPlayer);
-    }
-    else if(currentSquareId == "square18"){
-      handleChanceCard(currentPlayer);
-    }
-    else if(currentSquareId == "square6"){
-      alert("Jail Time. Pay $50");
-      updateByID("messagePara",currentPlayer.name + ": It's time to pay for your crimes");
-      currentPlayer.updateCash(currentPlayer.cash-50);
-    }
-    else if(currentSquareId == "square11"){
-      updateByID("messagePara",currentPlayer.name + ": Yay! You landed on free parking. Have some rest.");
-    }
-    else if(currentSquareId == "square16"){
-      updateByID("messagePara", currentPlayer.name + ": Oh Ho! Time to go to jail.");
-
-      alert("Oh Ho! Time to go to jail. Pay $50");
-      currentPlayer.updateCash(currentPlayer.cash-50);
-      changePosition(currentPlayer, 6);
-    }
-    else if (currentSquareId == "square1") {
+    if (currentSquareId == "square1") {
       currentPlayer.updateCash(currentPlayer.cash + 100);
       updateByID("messagePara",currentPlayer.name + ": You landed on start. Here's an extra $100");
     }
+
+    else if(currentSquareId == "square3"){
+      handleCommunityCard(currentPlayer);
+    }
+
+    else if(currentSquareId == "square6"){
+      setTimeout(function(){
+        alert("Jail Time. Pay $50");
+      },100);
+
+      updateByID("messagePara",currentPlayer.name + ": It's time to pay for your crimes");
+      currentPlayer.updateCash(currentPlayer.cash-50);
+    }
+
+    else if(currentSquareId == "square11"){
+      updateByID("messagePara",currentPlayer.name + ": Yay! You landed on free parking. Have some rest.");
+    }
+
+    else if(currentSquareId == "square16"){
+      updateByID("messagePara", currentPlayer.name + ": Oh Ho! Time to go to jail.");
+      setTimeout(function(){
+        alert("Oh Ho! Time to go to jail. Pay $50");
+        changePosition(currentPlayer, 6);
+        currentPlayer.updateCash(currentPlayer.cash-50);
+      },100);
+    }
+
+    else if(currentSquareId == "square18"){
+      handleChanceCard(currentPlayer);
+    }
+
     else if (currentSquareObj.owner == "For Sale") {
       //If the property is unowned, allow purchase:
       //check if owner can afford this square
-      if (currentPlayer.cash <= currentSquareObj.value) {
-        updateByID("messagePara",currentPlayer.name + ": Sorry, you can't afford to purchase this property");
-        return;
-      }
+      propertyForSale(currentPlayer,currentSquareObj)
+    }
 
-      //prompt to buy tile
-      var purchase = window.confirm(
-        currentPlayer.name +
-          ": This property is unowned. Would you like to purchase this property for $" +
-          currentSquareObj.value +
-          "?"
-      );
-      //if player chooses to purchase, update properties:
-      if (purchase) {
-        //update ownder of current square
-        currentSquareObj.owner = currentPlayer.id;
-        console.log(currentSquareObj.owner);
-        //update cash in the player object
-        currentPlayer.updateCash(currentPlayer.cash - currentSquareObj.value);
-        //log a message to the game board
-        updateByID(
-          "messagePara",
-          currentPlayer.name + ": You now have $" + currentPlayer.cash
-        );
-        //update the owner listed on the board
-        updateByID(
-          currentSquareObj.squareID + "-owner",
-          "Owner: " + game.players[game.currentPlayer].name
-        );
-      }
-    } else if (currentSquareObj.owner == currentPlayer.id) {
+    else if (currentSquareObj.owner == currentPlayer.id) {
       //if property is owned by current player, continue
       updateByID(
         "messagePara",
         currentPlayer.name + ": You own this property. Thanks for visiting!"
       );
-    } else {
+    }
+
+    else {
       //charge rent
-      updateByID("messagePara",currentPlayer.name + ": This property is owned by " + currentSquareObj.owner +
+      updateByID("messagePara",currentPlayer.name + ": This property is owned by the other player" +
           ". You owe $" + currentSquareObj.rent + ". You now have $" + (currentPlayer.cash-currentSquareObj.rent));
 
       // var owner = game.players.filter(function(player) {
@@ -337,6 +295,9 @@ var Game = (function() {
       // });
       currentPlayer.updateCash(currentPlayer.cash - currentSquareObj.rent);
     }
+
+
+
   }
 
   //function to update inner HTML based on element ID
@@ -344,6 +305,43 @@ var Game = (function() {
     document.getElementById(id).innerHTML = msg;
   }
 
+  function propertyForSale(player,currentSquareObj){
+    if (player.cash <= currentSquareObj.value) {
+      updateByID("messagePara", player.name + ": Sorry, you can't afford to purchase this property");
+      return;
+    }
+    //prompt to buy tile
+    var purchase;
+
+    setTimeout(function() {
+       purchase = window.confirm(
+         player.name +
+           ": This property is unowned. Would you like to purchase this property for $" +
+           currentSquareObj.value +
+           "?"
+       );
+
+       if (purchase) {
+         //update ownder of current square
+         currentSquareObj.owner = player.id;
+         //update cash in the player object
+         player.updateCash(player.cash - currentSquareObj.value);
+         //log a message to the game board
+         updateByID(
+           "messagePara",
+           player.name + ": You now have $" + player.cash
+         );
+         //update the owner listed on the board
+         updateByID(
+           currentSquareObj.squareID + "-owner",
+           "Owner: " + player.name
+         );
+       }
+     },100)
+
+    //if player chooses to purchase, update properties:
+
+  }
 
   function handleChanceCard(currentPlayer){
     var card1 = chanceCards.front();
@@ -353,13 +351,15 @@ var Game = (function() {
       currentPlayer.updateCash(currentPlayer.cash-200);
     }
     else if(card1.id == 2){
-      alert("Yay! You can advance to go. You get an extra $100")
+      setTimeout(function() {
+        alert("Yay! You can advance to go. You get an extra $100")
+      },100);
+
       changePosition(currentPlayer,1);
       currentPlayer.updateCash(currentPlayer.cash+100);
     }
     else if(card1.id == 3){
       currentPlayer.updateCash(currentPlayer.cash-100);
-      console.log(currentPlayer.id);
       if(currentPlayer.id == "player1"){
         game.players[1].updateCash(game.players[1].cash + 100);
       }else{
@@ -388,7 +388,10 @@ var Game = (function() {
       currentPlayer.updateCash(currentPlayer.cash-120);
     }
     else{
-      alert("Jail Time. Pay $50");
+      setTimeout(function() {
+        alert("Jail Time. Pay $50");
+       },100)
+
       changePosition(currentPlayer,6);
       currentPlayer.updateCah(currentPlayer.cash-50);
     }
