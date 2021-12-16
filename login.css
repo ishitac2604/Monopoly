@@ -1,7 +1,7 @@
   html, body {
     margin: 0;
     height: 100%;
-    background-image: url('https://lh3.googleusercontent.com/proxy/hTXXwemSqU2HtsRWAYddMApwmD_Q8QTFV66OsGeXbKB1Eu5FOPv4gR88htzJB5lj4AOqBVTF2EFNZ9q6NF_Ok5E7wGctc_7tAxWstun8lbqy2ZZe');
+    background-image: url('./images/background-login.jpeg');
     background-repeat: no-repeat;
     background-size: cover;
   }
